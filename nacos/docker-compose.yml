@@ -1,0 +1,21 @@
+version: '3.5'
+
+services:
+  nacos-registry:
+    image: nacos/nacos-server:2.0.3
+    container_name: nacos-registry
+    #command:
+    restart: always
+    #https://nacos.io/zh-cn/docs/quick-start-docker.html
+    environment:
+      - "MODE=standalone"
+    networks:
+      gl-net:
+        ipv4_address: 172.28.0.40
+    ports:
+      - 8848:8848
+
+
+networks:
+  volume_gl-net:
+    external: true
