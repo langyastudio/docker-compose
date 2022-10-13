@@ -1,0 +1,38 @@
+version: '3.5'
+services:
+  clickhouse:
+    image: bitnami/clickhouse:22.9
+    container_name: clickhouse
+    restart: always
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - CLICKHOUSE_ADMIN_USER=default
+      - CLICKHOUSE_ADMIN_PASSWORD=pansoft2022
+      - CLICKHOUSE_HTTP_PORT=8123
+      - CLICKHOUSE_TCP_PORT=9000
+      - CLICKHOUSE_INTERSERVER_HTTP_PORT=9009
+      #MySQL 客户端
+      - CLICKHOUSE_MYSQL_PORT=9004
+      # PostgreSQL 客户端
+      #CLICKHOUSE_POSTGRESQL_PORT: 9005
+    expose:
+      - 8123
+      - 9000
+      - 9009
+      - 9004
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+      - "9004:9004"
+    volumes:
+      - ./data:/var/lib/clickhouse
+      - ./config/conf.d:/etc/clickhouse-server/conf.d
+      - ./config/users.d:/etc/clickhouse-server/users.d
+      - ./config/users.xml:/etc/clickhouse-server/users.xml
+      - ./config/config.xml:/etc/clickhouse-server/config.xml
+
+    # /etc/security/limits.conf
+    ulimits:
+      core: 655350
+      nproc: 655350
+      nofile: 262144
