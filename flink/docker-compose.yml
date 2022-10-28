@@ -43,7 +43,6 @@ services:
       - ./data/log:/opt/flink/log
     depends_on:
       - flink-job
-
     # /etc/security/limits.conf
     ulimits:
       core: 655350
