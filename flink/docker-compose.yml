@@ -1,0 +1,51 @@
+version: '3.5'
+services:
+  flink-job:
+    image: flink:1.16.0-java8
+    container_name: flink-job
+    restart: always
+    expose:
+      - 18081
+      - 6123
+    ports:
+      - "18081:8081"
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-job
+    command: jobmanager
+    #command: standalone-job --job-classname com.job.ClassName [--job-id <job id>] [--fromSavepoint /path/to/savepoint [--allowNonRestoredState]] [job arguments]
+    volumes:
+      - ./config/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml
+      - ./data/artifacts:/opt/flink/usrlib
+      - ./data/log:/opt/flink/log
+    # /etc/security/limits.conf
+    ulimits:
+      core: 655350
+      nproc: 655350
+      nofile: 262144
+
+  flink-task:
+    image: flink:1.16.0-java8
+    container_name: flink-task
+    restart: always
+    expose:
+      - 6121
+      - 6122
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flink-job
+    command: taskmanager
+    volumes:
+      - ./config/flink-conf.yaml:/opt/flink/conf/flink-conf.yaml
+      - ./data/artifacts:/opt/flink/usrlib
+      - ./data/log:/opt/flink/log
+    depends_on:
+      - flink-job
+
+    # /etc/security/limits.conf
+    ulimits:
+      core: 655350
+      nproc: 655350
+      nofile: 262144

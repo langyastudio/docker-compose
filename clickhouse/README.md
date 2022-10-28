@@ -1,6 +1,7 @@
 ## install
 ```
 chmod 777 ./data
+docker-compose -f docker-compose.yml up -d
 ```
 
 
