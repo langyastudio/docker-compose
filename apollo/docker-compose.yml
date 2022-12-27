@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   apollo:
-    image: nobodyiam/apollo-quick-start:2.0.1
+    image: registry.cn-hangzhou.aliyuncs.com/langyastudio/apollo-quick-start:2.0.1
     container_name: apollo
     ports:
       - "8070:8070"
@@ -10,9 +10,9 @@ services:
       - "8090:8090"
     environment:
       JAVA_OPTS: '-Xms100m -Xmx1000m -Xmn100m -Xss256k -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=250m'
-      APOLLO_CONFIG_DB_URL:
+      APOLLO_CONFIG_DB_URL: '192.168.123.22:3306/ApolloConfigDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai'
       APOLLO_CONFIG_DB_USERNAME: 'root'
       APOLLO_CONFIG_DB_PASSWORD: 'Gl_MySQL8'
-      APOLLO_PORTAL_DB_URL:
+      APOLLO_PORTAL_DB_URL: '192.168.123.22:3306/ApolloPortalDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai'
       APOLLO_PORTAL_DB_USERNAME: 'root'
       APOLLO_PORTAL_DB_PASSWORD: 'Gl_MySQL8'
