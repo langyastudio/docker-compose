@@ -9,7 +9,9 @@ services:
       - "8080:8080"
       - "8090:8090"
     environment:
-      JAVA_OPTS: '-Xms100m -Xmx1000m -Xmn100m -Xss256k -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=250m'
+      #-Deureka.instance.ip-address=59.110.17.226 -Dspring.cloud.inetutils.ignoredInterfaces[0]=docker0 -Dspring.cloud.inetutils.ignoredInterfaces[1]=veth.*
+      #JAVA_OPTS: '-Xms100m -Xmx1000m -Xmn100m -Xss256k -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=250m'
+      JAVA_OPTS: '-Deureka.instance.ip-address=192.168.123.22 -Dspring.cloud.inetutils.ignoredInterfaces[0]=docker0 -Dspring.cloud.inetutils.ignoredInterfaces[1]=veth.* -Xms100m -Xmx1000m -Xmn100m -Xss256k -XX:MetaspaceSize=10m -XX:MaxMetaspaceSize=250m'
       APOLLO_CONFIG_DB_URL: '192.168.123.22:3306/ApolloConfigDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai'
       APOLLO_CONFIG_DB_USERNAME: 'root'
       APOLLO_CONFIG_DB_PASSWORD: 'Gl_MySQL8'
