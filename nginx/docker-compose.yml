@@ -7,24 +7,22 @@ services:
     container_name: nginx
     #command:
     restart: always
-    networks:
-      gl-net:
-        ipv4_address: 172.28.0.30
+    #networks:
+    #  gl-net:
+    #    ipv4_address: 172.28.0.30
     #environment:
     #  - NGINX_HOST=bogo365.net
     #  - NGINX_PORT=80
     ports:
-      - 8518:8518
-      - 8528:8528
-      - 8689:8689
+      - 8700:8700
     volumes:
       #静态资源根目录挂载
-      - /mnt/volume/nginx/web:/usr/share/nginx/html
-      - /mnt/volume/oss:/usr/share/nginx/oss
+      - ./web:/usr/share/nginx/html
+      #- ./oss:/usr/share/nginx/oss
       #配置文件挂载
-      - /mnt/volume/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
       #日志文件挂载
-      - /mnt/volume/nginx/logs:/var/log/nginx
+      - ./logs:/var/log/nginx
     # /etc/sysctl.conf
     sysctls:
       ####aliyun
@@ -60,12 +58,12 @@ services:
 #The actual name is volume_edu-net
 #表示新建了 `172.28.0.0/16` 的网络，名称为 edu-net
 #新建网络是为了实现同主机的多个容器间网络互通，走内网，类似于软件交换机
-networks:
-  gl-net:
-    driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.28.0.0/16
+#networks:
+  #gl-net:
+    #driver: bridge
+    #driver_opts:
+      #com.docker.network.enable_ipv6: "false"
+    #ipam:
+      #driver: default
+      #config:
+        #- subnet: 172.28.0.0/16

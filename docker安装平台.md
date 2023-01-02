@@ -1,8 +1,6 @@
 安装 CentOS 7.9.x 系统
 
-# 基础环境
-
-## 安装docker
+## 安装 docker
 在系统安装完成之后，使用 xshell 工具远程登录系统或者直接在系统的终端中进行操作
 ```bash
 yum erase podman buildah
@@ -18,13 +16,9 @@ systemctl start docker
 systemctl enable docker
 ```
 
-
 docker 参考文档 https://yeasy.gitbooks.io/docker_practice/content/
 
-
-
 注意：如果旧版本的 Docker 为 docker or docker-engine，需要卸载：
-
 ```bash
 yum remove docker \
 docker-client \
@@ -37,8 +31,7 @@ docker-engine
 ```
 
 
-
-## 安装docker composer 
+## 安装 docker composer 
 
 ```bash
 #curl -L https://github.com/docker/compose/releases/download/1.27.4/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
@@ -50,7 +43,6 @@ chmod +x /usr/local/bin/docker-compose
 #校验是否成功
 docker-compose --version
 ```
-
 
 
 ## 镜像加速
@@ -70,34 +62,6 @@ sudo systemctl restart docker
 ```
 
 
-# 安装平台
-
-> 磁盘挂载点 - `/mnt/volume`
->
-> 如果采用smb、nfs等挂载方式，要确保共享存储的账号拥有该挂载目录的**所有者权限**
-
-## 文件说明
-
-- 环境服务运行脚本 `docker-compose-env.yml`
-
-
-
-### 复制配置文件
-
-将 `volume` 下的所有文件复制到挂载的目录 `/mnt/volume`
-
-
-
-### 修改IP-暂时不用
-
-`192.168.123.110` 替换为实际的 IP
-
-```
-sed -i "s/192.168.123.22/192.168.123.110/g" `grep 192.168.123.22 -rl /mnt/volume`
-```
-
-
-
 ## 镜像仓库认证-暂时不用
 
 登录阿里云 Docker Registry，密码为 xxx
@@ -107,28 +71,10 @@ docker login --username=xx registry.cn-hangzhou.aliyuncs.com
 ```
 
 
-
-## 安装环境服务
-
-执行 docker-compose up 命令即可启动依赖的所有服务
-
-```bash
-#修改权限
-chmod 777 /mnt/volume/mysql
-chmod 777 /mnt/volume/mysql/logs -R
-chmod 777 /mnt/volume/nginx/logs -R
-chmod 777 /mnt/volume/nginx/web -R
-chmod 777 /mnt/volume/redis
-
-#安装环境服务
-cd /mnt/volume
-docker-compose -f docker-compose-env.yml up -d
-```
-
-> mysql、redis 启动时会执行 chown 操作
-
-
-### **tips**
+## Tips
+> 如果采用smb、nfs等挂载方式，要确保共享存储的账号拥有该挂载目录的**所有者权限**
+> 磁盘挂载点 - `/mnt/volume`
+> 执行 docker-compose up 命令即可启动依赖的所有服务
 
 停止所有相关容器
 
@@ -140,5 +86,12 @@ docker-compose -f docker-compose-app.yml stop
 
 ```bash
 docker-compose -f docker-compose-app.yml ps
+```
+
+修改IP-暂时不用
+
+```
+#`192.168.123.110` 替换为实际的 IP
+sed -i "s/192.168.123.22/192.168.123.110/g" `grep 192.168.123.22 -rl /mnt/volume`
 ```
 

@@ -1,5 +1,6 @@
 ## install
 ```
+#mysql 启动时会执行 chown 操作
 chmod 777 ../mysql
 chmod 777 ./logs
 docker-compose -f docker-compose.yml up -d
