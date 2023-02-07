@@ -1,9 +1,9 @@
 version: '3.5'
 
 services:
-  nacos-registry:
-    image: nacos/nacos-server:2.0.3
-    container_name: nacos-registry
+  nacos:
+    image: nacos/nacos-server:2.2.0
+    container_name: nacos-standalone
     #command:
     restart: always
     #https://nacos.io/zh-cn/docs/quick-start-docker.html
@@ -14,7 +14,7 @@ services:
     #    ipv4_address: 172.28.0.40
     ports:
       - 8848:8848
-
+      - 9848:9848
 
 #docker network ls
 #The actual name is volume_edu-net
