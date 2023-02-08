@@ -3,10 +3,14 @@ version: '3.5'
 services:
   nacos:
     image: nacos/nacos-server:v2.2.0
-    container_name: nacos-standalone
+    container_name: nacos
+    env_file:
+      - ./env/nacos-standlone-mysql.env
     #command:
     restart: always
     #https://nacos.io/zh-cn/docs/quick-start-docker.html
+    volumes:
+      - ./logs/:/home/nacos/logs
     environment:
       - "MODE=standalone"
     #networks:
@@ -15,6 +19,7 @@ services:
     ports:
       - 8848:8848
       - 9848:9848
+      - 9555:9555
 
 #docker network ls
 #The actual name is volume_edu-net
