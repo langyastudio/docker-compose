@@ -1,0 +1,38 @@
+version: '3.5'
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.42.0
+    volumes:
+      - ./conf/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - nacos
+    #restart: on-failure
+    restart: always
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:9.3.6
+    ports:
+      - 3000:3000
+    #restart: on-failure
+    restart: always
+
+#docker network ls
+#The actual name is volume_edu-net
+#表示新建了 `172.28.0.0/16` 的网络，名称为 gl-net
+#新建网络是为了实现同主机的多个容器间网络互通，走内网，类似于软件交换机
+#networks:
+#  gl-net:
+#    driver: bridge
+#    driver_opts:
+#      com.docker.network.enable_ipv6: "false"
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 172.28.0.0/16
+#networks:
+#  volume_gl-net:
+#    external: true
