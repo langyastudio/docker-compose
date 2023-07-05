@@ -1,5 +1,5 @@
 #基础镜像
-FROM 192.168.254.37:5000/library/openjdk:8
+FROM 192.168.254.37:5000/library/openjdk:8-jdk
 #维护者
 MAINTAINER jiangjiaxiongsina@qq.com <155xxxx3912>
 
