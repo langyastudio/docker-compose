@@ -1,34 +1,33 @@
 #基础镜像
-FROM 192.168.254.37:5000/library/openjdk:8-jdk
+FROM 192.168.123.1:5000/library/openjdk:8-jdk
 #维护者
-MAINTAINER jiangjiaxiongsina@qq.com <155xxxx3912>
-
+LABEL maintainer="jiangjiaxiongsina@qq.com"
 #设置一个时区的环境变量
 ENV TZ=Asia/Shanghai
 # 添加时区
 RUN ln -sf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo $TZ >/etc/timezone
  
-#创建存放agent所用的文件夹
-RUN ["mkdir", "/agent"]
-#创建skywalking-agent专用文件夹
-RUN ["mkdir", "/agent/skywalking-agent"]
-#将本地的skywalking-agent copy 到基础镜像内的agent文件下
-COPY ./skywalking-agent/ /agent/skywalking-agent/
-#创建存放软件的文件夹
-RUN ["mkdir", "/soft"]
-#添加arthas到软件目录
-ADD  ./arthas-boot.jar /soft/
-#创建app 存放文件夹
+#创建统一的app文件夹
 RUN ["mkdir", "/app"]
+#创建app 存放文件夹
+RUN ["mkdir", "/app/app"]
+#创建存放软件的文件夹
+RUN ["mkdir", "/app/soft"]
+#创建存放agent所用的文件夹
+RUN ["mkdir", "/app/agent"]
+#创建skywalking-agent专用文件夹
+RUN ["mkdir", "/app/agent/skywalking-agent"]
+#添加arthas到软件目录
+ADD  ./arthas-boot.jar /app/soft/
+#将本地的skywalking-agent copy 到基础镜像内的agent文件下
+COPY ./skywalking-agent/ /app/agent/skywalking-agent/
+#设置 app 文件夹的权限
+RUN ["chmod","-R","777", "/app/"]
 
 #设定bash命令进入的工作目录为/app
 WORKDIR /app
-
-#将默认的HTTP和HTTPS端口的80 和 443 端口放开
-EXPOSE 80
-EXPOSE 443
-
+ 
 #元数据设置
 LABEL org.label-schema.schema-version="1.0"
 LABEL org.label-schema.build-date=$BUILD_DATE
