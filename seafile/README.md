@@ -12,9 +12,15 @@ docker-compose -f docker-compose.yml up -d
 ## access address
 
 ```code
-如：http://seafile.example.com
-USERNAME: me@example.com
-PASSWORD: d90F&zr66diwNON
+地址：http://seafile.example.com
+用户名: me@example.com
+密码: d90F&zr66diwNON
+```
+
+## 配置文件
+```
+#https://cloud.seafile.com/published/seafile-manual-cn/config/README.md
+/data/seafile/seafile-data/seafile/conf
 ```
 
 ## 增加一个新的管理员
