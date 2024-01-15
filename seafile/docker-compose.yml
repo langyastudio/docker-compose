@@ -47,3 +47,7 @@ services:
 
 networks:
   seafile-net:
+    ipam:
+      driver: default
+      config:
+        - subnet: 162.28.0.0/16
